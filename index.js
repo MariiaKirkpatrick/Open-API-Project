@@ -20,6 +20,7 @@ button.classList.add('selected');
         dogScore++;
     }
 }
+
 const catPerson = document.querySelector('#catPerson');
 const dogPerson = document.querySelector('#dogPerson');
 
@@ -82,7 +83,7 @@ function getCatImage() {
     fetch('https://api.thecatapi.com/v1/images/search')
     .then(res => res.json())
     .then(data => {
-        catImage.innerHTML = `<img src="${data[0].url}" alt="Cat Image" class="responsive-img"/>`
+        catImage.innerHTML = `<img src="${data[0].url}" alt="Cat Image" class="responsive-img"/>`   
     })
     .catch(error => console.error('Error fetching cat image:', error));
 }
@@ -98,3 +99,4 @@ function getDogImage() {
 
 getCatImage();
 getDogImage();
+
