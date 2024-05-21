@@ -33,18 +33,24 @@ function showResult() {
     let message = '';
     if (catScore > dogScore) {
         message = 'cat'; 
-            fetch('https://api.thecatapi.com/v1/images/search')
-            .then(res => res.json())
-            .then(data => {
-                catPerson.innerHTML = `<img src="${data[0].url}" alt="Cat Image" class="responsive-img"/>`
-            })
-            .catch(error => console.error('Error fetching cat image:', error));
-    } else {
-        message = 'dog';
-        fetch('https://api.thedogapi.com/v1/images/search')
+        fetch('https://api.thecatapi.com/v1/images/search?limit=10')
     .then(res => res.json())
     .then(data => {
-        dogPerson.innerHTML = `<img src="${data[0].url}" alt="Dog Image" class="responsive-img"/>`
+        catPerson.innerHTML = '';
+        for (let i = 0; i < data.length; i++) { //To get 10 images of cats 
+            catPerson.innerHTML += `<img src="${data[i].url}" alt="Cat Image" class="responsive-img"/>`;
+        } 
+    })
+    .catch(error => console.error('Error fetching cat image:', error));
+    } else {
+        message = 'dog';
+        fetch('https://api.thedogapi.com/v1/images/search?limit=10')
+    .then(res => res.json())
+    .then(data => {
+        dogPerson.innerHTML = '';
+        for (let i = 0; i < data.length; i++) { //To get 10 images of dogs
+            dogPerson.innerHTML += `<img src="${data[i].url}" alt="Dog Image" class="responsive-img"/>`
+        }
     })
     .catch(error => console.error('Error fetching dog image:', error));
     }
@@ -74,14 +80,10 @@ const catImage = document.querySelector('#catImage');
 const dogImage = document.querySelector('#dogImage');
 
 function getCatImage() {
-    fetch('https://api.thecatapi.com/v1/images/search?limit=10')
+    fetch('https://api.thecatapi.com/v1/images/search')
     .then(res => res.json())
     .then(data => {
-        for (let i = 0; i < data.length; i++) 
-            { console.log(data[i].url); 
-                // catImage.innerHTML = `<img src="${data[0].url}" alt="Cat Image" class="responsive-img"/>`
-    }
-        
+        catImage.innerHTML = `<img src="${data[0].url}" alt="Cat Image" class="responsive-img"/>`   
     })
     .catch(error => console.error('Error fetching cat image:', error));
 }
@@ -92,12 +94,9 @@ function getDogImage() {
     .then(data => {
         dogImage.innerHTML = `<img src="${data[0].url}" alt="Dog Image" class="responsive-img"/>`
     })
-    .catch(error => console.error('Error fetching cat image:', error));
+    .catch(error => console.error('Error fetching dog image:', error));
 }
 
 getCatImage();
 getDogImage();
-
-
-
 
